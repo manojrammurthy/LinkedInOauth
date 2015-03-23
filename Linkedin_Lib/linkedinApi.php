@@ -7,7 +7,7 @@
 error_reporting(E_ALL ^ E_NOTICE);
 ini_set('display_errors', 1);
 
-class githubApi {
+class linkedinApi {
 	
 	
 	private $client_id = '';
@@ -15,9 +15,9 @@ class githubApi {
 	private $redirect_url = '';
 	private $app_name = '';
 	
-	public $auth_base = 'https://github.com/';
-	public $api_base = 'https://api.github.com/';
-	public $git_code = '';
+	public $auth_base = 'https://www.linkedin.com/uas/oauth2/';
+	public $api_base = 'https://api.linkedin.com/v1/';
+	public $ln_code = '';
 	/*
 	 * Variable declaration for future use
 	 */
@@ -31,7 +31,7 @@ class githubApi {
 			$this->redirect_url = $config['redirect_url'];
 			$this->app_name = str_replace(' ','-',$config['app_name']);
 			
-			$this->git_code = $_GET['code'];
+			$this->ln_code = $_GET['code'];
 			
 			$this->sendAccessTokenReq();
 			
