@@ -1,5 +1,10 @@
 <?php
 
+echo "<br>".$_GET['code']."<br>";
+echo $_GET['state']."</br>";
+//echo $_SESSION['val']."</br>";
+
+
 ?>
 <!doctype html>
 <html lang="en">

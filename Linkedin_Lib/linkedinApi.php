@@ -38,3 +38,47 @@ class linkedinApi {
 		} else
 			die('Invalid configuration..!');
 	}
+
+	private function sendAccessTokenReq(){
+		$config = array('method' => 'POST',
+						'data'=>$this->buildparams(),
+						'header'=>array("Content-Type: application/x-www-form-urlencoded","Accept: application/json"),
+						'url' => $this->auth_base.'accessToken');
+						$this->result = $this->sendRequest($config);
+	}
+	private function buildParams(){
+		return http_build_query(array(
+				'grant_type'=> "authorization_code",
+				'code' => $this->ln_code,
+				'redirect_uri' => $this->redirect_url ,
+		        'client_id' => $this->client_id ,
+				'client_secret' => $this->client_secret
+		        ));
+	}
+	private function sendRequest($config, $debug=false){
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		if($config['header'] and is_array($config['header'])) {
+			curl_setopt($ch, CURLOPT_HEADER, true);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $config['header']);
+		}
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		if($config['method'] == 'POST' and !empty($config['data'])){
+			curl_setopt($ch, CURLOPT_POST, true);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $config['data']);
+		} else {
+			curl_setopt($ch, CURLOPT_HTTPGET, true);
+		}
+		curl_setopt($ch, CURLOPT_URL, $config['url']);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+		$response = curl_exec($ch);
+			//var_dump($response);
+		if($debug) var_dump($response);
+		return $response;
+	}
+	public function getAccessToken(){
+		return $this->result[1]->access_token;
+	}
+}
