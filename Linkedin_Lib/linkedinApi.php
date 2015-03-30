@@ -16,7 +16,7 @@ class linkedinApi {
 	private $app_name = '';
 	
 	public $auth_base = 'https://www.linkedin.com/uas/oauth2/';
-	public $api_base = 'https://api.linkedin.com/v1/';
+	public $api_base = 'https://api.linkedin.com/v1';
 	public $ln_code = '';
 	/*
 	 * Variable declaration for future use
@@ -43,7 +43,7 @@ class linkedinApi {
 		$config = array('method' => 'POST',
 						'data'=>$this->buildparams(),
 						'header'=>array("Content-Type: application/x-www-form-urlencoded","Accept: application/json"),
-						'url' => $this->auth_base.'accessToken');
+						'url' => $this->auth_base.'/accessToken?');
 						$this->result = $this->sendRequest($config);
 	}
 	private function buildParams(){
@@ -77,6 +77,8 @@ class linkedinApi {
 			//var_dump($response);
 		if($debug) var_dump($response);
 		return $response;
+		$this->_access_token = $response['access_token'];
+        $this->_access_token_expires = $response['expires_in'];
 	}
 	public function getAccessToken(){
 		return $this->result[1]->access_token;
