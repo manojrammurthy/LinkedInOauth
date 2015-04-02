@@ -1,9 +1,5 @@
 <?php
-echo "<br>".$_GET['code']."<br>";
-echo $_GET['state']."</br>";
-//echo $_SESSION['val']."</br>";
-
-
+//echo "<br>".$_GET['code']."<br>";
 ?>
 <!doctype html>
 <html lang="en">
@@ -13,10 +9,12 @@ echo $_GET['state']."</br>";
 </head>
 <body>
 	<div style="text-align:center">
+
 	<a href="linkedin_login.php"><img src="images/linkedin_login.png" /></a>
 	<!-- <br/>
-		<a href="http://www.9lessons.info">www.9lessons.info</a>
-	</div> -->
+		<a href="http://www.9lessons.info">www.9lessons.info</a>-->
+	</div> 
 	
+	 
 </body>
 </html>

@@ -21,7 +21,7 @@ class linkedinApi {
 	/*
 	 * Variable declaration for future use
 	 */
-	private $result = array();
+	public $result = array();
 	private $user = array();
 	
 	public function __construct($config) {
@@ -29,9 +29,10 @@ class linkedinApi {
 			$this->client_id = $config['client_id'];
 			$this->client_secret = $config['client_secret'];
 			$this->redirect_url = $config['redirect_url'];
-			$this->app_name = str_replace(' ','-',$config['app_name']);
+			//$this->app_name = str_replace(' ','-',$config['app_name']);
 			
 			$this->ln_code = $_GET['code'];
+
 			
 			$this->sendAccessTokenReq();
 			
@@ -42,7 +43,7 @@ class linkedinApi {
 	private function sendAccessTokenReq(){
 		$config = array('method' => 'POST',
 						'data'=>$this->buildparams(),
-						'header'=>array("Content-Type: application/x-www-form-urlencoded","Accept: application/json"),
+						'header'=>array("Content-Type: application/x-www-form-urlencoded"),
 						'url' => $this->auth_base.'/accessToken?');
 						$this->result = $this->sendRequest($config);
 	}
@@ -74,13 +75,28 @@ class linkedinApi {
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 		$response = curl_exec($ch);
-			//var_dump($response);
-		if($debug) var_dump($response);
+			
+		//if($debug) var_dump($response);
 		return $response;
-		$this->_access_token = $response['access_token'];
-        $this->_access_token_expires = $response['expires_in'];
+		//$this->_access_token = $response['access_token'];
+        //$this->_access_token_expires = $response['expires_in'];
 	}
-	public function getAccessToken(){
-		return $this->result[1]->access_token;
-	}
+// 	private function sendRequest($config){
+// 		$curl = curl_init();
+// 		curl_setopt_array($curl, array(
+//     CURLOPT_RETURNTRANSFER => 1,
+//     curl_setopt($curl, CURLOPT_HEADER, true),
+//     curl_setopt($curl, CURLOPT_HTTPHEADER, $config['header']),
+// 	curl_setopt($curl, CURLOPT_POST, true),
+// 	curl_setopt($curl, CURLOPT_POSTFIELDS, $config['data']),
+// 	// 		curl_setopt($ch, CURLOPT_HTTPHEADER, $config['header']);
+//     CURLOPT_URL => $config['url']
+// ));
+// 		 $result = curl_exec($curl);
+// 		 return $result->linkedinApi->access_token;
+// 		curl_close();
+// 	
+//}	// public function getAccessToken(){
+	// 	return $this->result[1]->access_token;
+	// }
 }
