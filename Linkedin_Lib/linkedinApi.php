@@ -21,7 +21,7 @@ class linkedinApi {
 	/*
 	 * Variable declaration for future use
 	 */
-	public $result = array();
+	private  $result = array();
 	private $user = array();
 	
 	public function __construct($config) {
@@ -78,8 +78,22 @@ class linkedinApi {
 			
 		//if($debug) var_dump($response);
 		return $response;
-		//$this->_access_token = $response['access_token'];
-        //$this->_access_token_expires = $response['expires_in'];
+		
+	}
+
+	private function getAccessToken(){
+		 
+		$str = $this->result;
+ 		$delimiter = 'Path=/';
+ 		 $c = substr_count($this->result,'Path=/');
+ 		 $a = explode('Path=/',$this->result);
+
+	    $j = json_decode($a[$c]);
+	    return array("access_token"=>$j->access_token,"expires_in"=>$j->expires_in);
+	    
+	}
+	public function access(){
+		return $this->getAccessToken();
 	}
 // 	private function sendRequest($config){
 // 		$curl = curl_init();
@@ -89,14 +103,11 @@ class linkedinApi {
 //     curl_setopt($curl, CURLOPT_HTTPHEADER, $config['header']),
 // 	curl_setopt($curl, CURLOPT_POST, true),
 // 	curl_setopt($curl, CURLOPT_POSTFIELDS, $config['data']),
-// 	// 		curl_setopt($ch, CURLOPT_HTTPHEADER, $config['header']);
 //     CURLOPT_URL => $config['url']
 // ));
 // 		 $result = curl_exec($curl);
-// 		 return $result->linkedinApi->access_token;
+// 		 return $result;
 // 		curl_close();
-// 	
-//}	// public function getAccessToken(){
-	// 	return $this->result[1]->access_token;
-	// }
+// 	}
+	
 }
